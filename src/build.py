@@ -120,6 +120,10 @@ def process_content():
 
     # Find all markdown files
     for md_file in content_path.glob("**/*.md"):
+        # Skip files in hidden folders
+        if any(part.startswith('.') for part in md_file.parts):
+            continue
+
         # Skip drafts if draft mode is not enabled
         if md_file.stem.startswith('_') and md_file.stem != '_index':
             continue
