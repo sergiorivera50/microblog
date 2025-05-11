@@ -15,10 +15,10 @@ We first begin by motivating the application of _linear algebra_ to the field of
 A fundamental application of linear algebra is solving sets of simultaneous equations:
 
 $$
-\begin{align}
+\begin{aligned}
 2a + 3b &= 8 \\
 10a + 1b &= 13 \\
-\end{align}
+\end{aligned}
 \quad \text{is equivalent to} \quad
 \begin{bmatrix}
 2 & 3 \\
