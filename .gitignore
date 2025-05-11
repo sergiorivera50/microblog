@@ -1,6 +1,7 @@
 # Environment-specific directories
 .idea
 .venv
+**/.obsidian
 
 # Build artifacts (should be created at CI/CD)
 public
