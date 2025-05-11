@@ -64,6 +64,10 @@ def copy_content_assets():
         if asset.is_dir() or asset.suffix in ['.md', '.markdown']:
             continue
 
+        # Skip files in hidden folders (paths containing a folder starting with '.')
+        if any(part.startswith('.') for part in asset.parts):
+            continue
+
         # Determine destination path
         rel_path = asset.relative_to(content_path)
         dest_path = Path(PUBLIC_DIR) / rel_path
