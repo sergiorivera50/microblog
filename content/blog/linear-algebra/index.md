@@ -1,7 +1,8 @@
 ---
 title: A Gentle Introduction to Linear Algebra for Data Science
 date: 2024-07-29
-tags: [math]
+tags:
+  - math
 math: true
 ---
 
