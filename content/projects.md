@@ -7,7 +7,6 @@ weight: 20
 
 - [TactusVita - A next-gen AI platform for oncology insights](https://www.tactusvita.com/)
 
-### Past projects
+### Past projects and work
 
-- [How we generated 50M euros in revenue for a large food retailer in Spain]()
-- [Course on Geometric Deep Learning - Teaching at Universidad Pontificia de Comillas]()
+- [Software Engineering Internship at IBM](https://www.linkedin.com/in/sergioriveralopez/overlay/experience/1804716057/multiple-media-viewer/?profileId=ACoAACjI8hQB44fsMbWbEff-PwbUMUabCqOTN6w&treasuryMediaId=1635515479798)
