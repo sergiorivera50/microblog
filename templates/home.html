@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ site.title }}{% endblock %}
+{% block description %}{{ site.description }}{% endblock %}
+
+{% block content %}
+<section class="home-content">
+    <div class="content">
+        <div class="profile-container">
+            <div class="profile-content">
+                <img src="/profile.png" alt="Profile Picture" class="profile-image">
+                {{ page.content|safe }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

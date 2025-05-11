@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% from "partials/show-tags.html" import show_tags %}
+
+{% block title %}{{ page.title }} - {{ site.title }}{% endblock %}
+
+{% block content %}
+<section class="list-content">
+    {% if is_filtered | default(false) %}
+
+    <h3 style="margin-bottom:0">Filtering for "{{ current_tag | capitalize }}"</h3>
+    <small>
+        <a href="/blog/">Remove filter</a>
+    </small>
+    {% endif %}
+
+    {% if page.content %}
+    <div class="content">
+        {{ page.content|safe }}
+    </div>
+    {% endif %}
+
+    {% if section_posts %}
+    <ul class="blog-posts">
+        {% for post in section_posts %}
+        <li>
+            <span>
+                <i>
+                    <time>{{ post.date_formatted }}</time>
+                </i>
+            </span>
+            <a href="{{ post.url }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if page.section == 'blog' and tags and not is_filtered %}
+        <small>{{ show_tags(tags) }}</small>
+    {% endif %}
+
+    {% else %}
+    <p>No posts yet.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+[project]
+name = "microblog"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Sergio Rivera",email = "sriveralopez50@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "markdown (>=3.8,<4.0)",
+    "python-frontmatter (>=1.1.0,<2.0.0)",
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "watchdog (>=6.0.0,<7.0.0)",
+    "livereload (>=2.7.1,<3.0.0)",
+    "tomli (>=2.2.1,<3.0.0)",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+packages = [{include = "*", from="src"}]
+
+[tool.poetry.scripts]
+serve = "src.serve:main"
+build = "src.build:build_site"

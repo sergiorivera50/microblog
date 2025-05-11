@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} - {{ site.title }}{% endblock %}
+{% block description %}{{ page.metadata.description | default(site.description) }}{% endblock %}
+
+{% block content %}
+<article class="page">
+    <div class="page-content">
+        {{ page.content|safe }}
+    </div>
+</article>
+{% endblock %}

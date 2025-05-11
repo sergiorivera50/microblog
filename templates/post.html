@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% from "partials/show-tags.html" import show_tags %}
+
+{% block title %}{{ page.title }} - {{ site.title }}{% endblock %}
+{% block description %}{{ page.metadata.description | default(site.description) }}{% endblock %}
+
+{% block head %}
+{{ super() }}
+
+<!-- Additional meta tags for blog posts -->
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.metadata.description | default(site.description) }}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ site.base_url }}{{ page.url }}">
+
+<!-- Math support -->
+{% if page.metadata.math | default(false) %}
+{% from "partials/math.html" import load_math %}
+{{ load_math() }}
+{% endif %}
+
+<!-- Progress bar feature -->
+<style>
+    #progress-container {
+        position: fixed;
+        top: 50%;
+        left: 5%;
+        transform: translateY(-50%);
+        width: 2px;
+        height: 50%;
+        background: rgba(114, 114, 114, 0.1);
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.5s ease;
+    }
+
+    #progress-bar {
+        width: 100%;
+        background: #fff;
+        height: 0;
+        transition: height 0.1s ease;
+    }
+
+    /* Only show progress bar on larger screens */
+    @media (min-width: 768px) {
+        #progress-container.visible {
+            opacity: 1;
+        }
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Create the progress bar elements
+        document.body.innerHTML += `
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+        `;
+
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const threshold = 300; // Set threshold in pixels
+
+        document.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (scrollTop / docHeight) * 100;
+
+            // Show progress bar after crossing the threshold
+            if (scrollTop > threshold) {
+                progressContainer.classList.add('visible');
+            } else {
+                progressContainer.classList.remove('visible');
+            }
+
+            // Update progress bar height
+            progressBar.style.height = scrolled + '%';
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<article class="post">
+    <header class="post-header">
+        <h1 style="font-size: 2.0em;">{{ page.title }}</h1>
+
+        <p>
+            <i><time>{{ page.date_formatted }}</time></i>
+        </p>
+    </header>
+
+    <div class="post-content">
+        {{ page.content|safe }}
+    </div>
+
+    {{ show_tags(page.metadata.tags) }}
+</article>
+{% endblock %}
