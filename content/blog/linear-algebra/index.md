@@ -28,7 +28,7 @@ $$
 =\begin{bmatrix} 8 \\ 13 \end{bmatrix}
 $$
 
-Where we employ vectors and matrices to solve them through the use of a special operation called the _inverse_, which we will later introduce.
+We can employ vectors and matrices to solve them through the use of a special operation called the _inverse_, which we will later introduce.
 
 Another typical use case is that of fitting a curve to a dataset that best describes it:
 
