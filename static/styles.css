@@ -134,11 +134,8 @@ footer {
 
 /* blog post content */
 .post-content img {
-    max-width: 40%;
-    min-width: 200px;
     display: block;
     margin: auto;
-    width: 50%;
 }
 
 /* blog post list */

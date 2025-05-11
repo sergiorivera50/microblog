@@ -15,6 +15,12 @@ def slugify(text):
     return text
 
 def render_markdown(text):
+    """
+    Render markdown text to HTML with custom handling for:
+    1. LaTeX blocks (preserved for later JS rendering)
+    2. Custom image syntax with size specifications: ![alt|width](src)
+    """
+
     # Store LaTeX parts
     placeholders = {}
     count = 0
@@ -39,8 +45,46 @@ def render_markdown(text):
 
     text = re.sub(r'(?<!\\)\$(.*?)(?<!\\)\$', replace_inline, text)
 
+    # Process custom image syntax: ![alt|width](src)
+    def process_images(match):
+        alt_width = match.group(1)
+        src = match.group(2)
+
+        # Check if there's a width specification
+        if '|' in alt_width:
+            alt, width = alt_width.rsplit('|', 1)
+            # Try to parse width as number (strip 'px' if present)
+            width = width.strip()
+            if width.endswith('px'):
+                width = width[:-2]
+
+            # If width is a valid number, add the width attribute
+            if width.isdigit():
+                return f'![{alt}]({src})<!-- img-width:{width} -->'
+
+        # If no width specification or invalid format, return unchanged
+        return f'![{alt_width}]({src})'
+
+    # Process images with custom syntax
+    text = re.sub(r'!\[(.*?)\]\((.*?)\)', process_images, text)
+
     # Process with markdown
     html = markdown.markdown(text, extensions=['fenced_code', 'codehilite', 'tables', 'md_in_html'])
+
+    # Post-process HTML to add width attributes to images
+    def add_image_width(match):
+        img_tag = match.group(1)
+        width = match.group(2)
+
+        # If img tag already has a width attribute, don't modify
+        if 'width=' in img_tag:
+            return f'<img {img_tag}>'
+
+        # Add width attribute
+        return f'<img {img_tag} width="{width}">'
+
+    # Add width attributes to images with comments
+    html = re.sub(r'<img (.*?)><!-- img-width:(\d+) -->', add_image_width, html)
 
     # Restore LaTeX parts
     for placeholder, latex in placeholders.items():

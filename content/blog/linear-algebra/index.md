@@ -32,7 +32,7 @@ Where we employ vectors and matrices to solve them through the use of a special 
 
 Another typical use case is that of fitting a curve to a dataset that best describes it:
 
-![Fitting curve](fitting_curve.png)
+![Fitting curve|400](assets/fitting_curve.png)
 
 Although we will not yet show how to achieve this, you must at least be aware that plenty of fields in the real world use methods like _polynomial regression_ to approximate these curves in order to help them predict new observations. Some of the more prominent being healthcare, economics, and environmental science.
 
@@ -42,7 +42,7 @@ All in all, we see these kinds of problems all the time, from simpler linear reg
 
 A vector $\mathbf{v} \in \mathbb{R}^{n}$ is an ordered tuple of $n$ scalars. We can think of vectors as points in space, directions, or quantities that have both magnitude and direction. For example, a vector in two-dimensional space is written as $\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}$, and in three-dimensional space as $\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \\ v_3 \end{bmatrix}$.
 
-![Two-dimensional vector](vector.png)
+![Two-dimensional vector|140](assets/vector.png)
 
 Note here that we are using a different notation for vectors than what you might find when you open a traditional linear algebra textbook. In machine learning, it is convention to define vectors as $\mathbf{u}$ instead of $\vec{u}$, however, both notations are valid and you should use whichever you are more comfortable working with. Just be aware that for the duration of this post I will be adhering to the former convention.
 
@@ -106,7 +106,7 @@ $$
 
 By looking at the cosine rule, we can derive a property of the dot product that relates the angle between two vectors to the operation's result.
 
-![Three vectors](cosine_rule.png)
+![Three vectors|200](assets/cosine_rule.png)
 
 Recall the cosine rule:
 
@@ -151,7 +151,7 @@ Therefore, the result of the dot product of two vectors is in direct relation to
 
 We understand the term *scalar projection* as the length of the “shadow” that is cast from one vector to another, which is closely linked with the angle that they form.
 
-![Visual depiction of scalar projection](scalar_projection.png)
+![Visual depiction of scalar projection|200](assets/scalar_projection.png)
 
 Stemming from trigonometry, we recall:
 
