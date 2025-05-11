@@ -4,16 +4,14 @@ build.py - Minimal static site generator that reads Markdown files and converts 
 """
 
 import os
-import re
 import tomli
 import shutil
 import frontmatter
 from datetime import datetime
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
-from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-from src.utils import render_markdown
+from src.utils import render_markdown, slugify
 
 # Configuration
 CONTENT_DIR = "content"
@@ -32,13 +30,6 @@ def load_config():
             return tomli.load(f)
     except FileNotFoundError:
         raise Exception(f"Config file '{CONFIG_FILE}' not found")
-
-def slugify(text):
-    """Convert text to URL-friendly slug"""
-    text = text.lower()
-    text = re.sub(r'[^a-z0-9]+', '-', text)
-    text = re.sub(r'^\-|\-$', '', text)
-    return text
 
 def ensure_dir(directory):
     """Ensure directory exists"""

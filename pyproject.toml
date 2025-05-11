@@ -28,3 +28,4 @@ packages = [{include = "*", from="src"}]
 [tool.poetry.scripts]
 serve = "src.serve:main"
 build = "src.build:build_site"
+new = "src.utils:create_new_post"
