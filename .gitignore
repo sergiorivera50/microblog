@@ -2,6 +2,7 @@
 .idea
 .venv
 **/.obsidian
+**/.DS_Store
 
 # Build artifacts (should be created at CI/CD)
 public
