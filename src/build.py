@@ -331,13 +331,5 @@ def build_site():
 
     print(f"Site built successfully! {len(content['pages'])} pages processed.")
 
-def handler(event, context):
-    """Serverless function handler for Vercel"""
-    build_site()
-    return {
-        'statusCode': 200,
-        'body': 'Build completed successfully'
-    }
-
 if __name__ == "__main__":
     build_site()
