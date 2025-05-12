@@ -50,3 +50,14 @@ git push
 **CI/CD Pipeline**
 
 On the background, GitHub Actions will execute `poetry run build` to generate the static site and deploy it to [sergiorivera.dev](https://www.sergiorivera.dev/)
+
+## Future Plans
+
+- Instead of imposing `content/blog` to be an Obsidian vault, I should add a "mode" in which you `build` the site from
+a path (which can be the folder of an already existing Obsidian vault). This adds a bit of complexity because it would
+require an additional step in which attachments are located and moved into its appropriate post folder. But, essentially,
+the user experience would remain the same: you make changes on a file and see them directly applied through the live
+server (if in development). Ideally copying files is not expensive and can be implemented with low friction. This path
+could be specified through the `site.toml` file.
+- `styles.css` needs to be updated to make all font sizes use `rem` rather than `px` for accesibility purposes.
+- I might want to have an automated conversion of content images to `webp` format for optimization purposes.
