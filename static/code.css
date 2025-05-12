@@ -1,0 +1,155 @@
+:root {
+    --code-background: #1e1e1e;
+    --code-selection: #3a3a3a;
+    --code-comment: #767676;
+    --code-keyword: #cc99cd;
+    --code-string: #7ec699;
+    --code-number: #b5cea8;
+    --code-operator: #cccccc;
+    --code-function: #dcdcaa;
+    --code-class: #4ec9b0;
+    --code-variable: #9cdcfe;
+}
+
+.code-block {
+    background-color: #1e1e1e;
+    border: 1px solid #3a3a3a;
+    border-radius: 4px;
+    padding: 16px;
+    margin: 16px 0;
+    overflow: auto;
+    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 1em;
+    line-height: 1.5;
+    color: var(--text-color);
+    position: relative; /* Enable positioning for the copy button */
+}
+
+/* Code elements inside the block */
+.code-block code {
+    background: transparent;
+    padding: 0;
+    border: none;
+    font-family: inherit;
+}
+
+/* Line numbers styling */
+.code-block .linenodiv pre {
+    margin: 0;
+    padding-right: 10px;
+    color: #666;
+    border-right: 1px solid #3a3a3a;
+    text-align: right;
+    user-select: none;
+}
+
+/* Syntax highlighting */
+.code-block .k, .code-block .kd, .code-block .kn {  /* Keywords */
+    color: #cc99cd; /* Soft purple */
+    font-weight: bold;
+}
+
+.code-block .s, .code-block .s1, .code-block .s2 {  /* Strings */
+    color: #7ec699; /* Soft green */
+}
+
+.code-block .c, .code-block .c1, .code-block .cm {  /* Comments */
+    color: #767676; /* Muted gray */
+    font-style: italic;
+}
+
+.code-block .n, .code-block .nb {  /* Names/builtins */
+    color: #9cdcfe; /* Soft blue */
+}
+
+.code-block .mi, .code-block .mf {  /* Numbers */
+    color: #b5cea8; /* Sage green */
+}
+
+.code-block .o {  /* Operators */
+    color: #cccccc; /* Light gray */
+}
+
+.code-block .p {  /* Punctuation */
+    color: #cccccc; /* Light gray */
+}
+
+.code-block .nf, .code-block .nc {  /* Function names and classes */
+    color: #dcdcaa; /* Soft gold */
+}
+
+.code-block .nn {  /* Module names */
+    color: #8fbacf; /* Match your link color */
+}
+
+.code-block .bp {  /* Self keyword */
+    color: #569cd6; /* Brighter blue */
+}
+
+.code-block .fm {  /* Method calls */
+    color: #dcdcaa; /* Soft gold */
+}
+
+.code-block .il {  /* Integer literals */
+    color: #b5cea8; /* Sage green */
+}
+
+.code-block .ow {  /* Special operators */
+    color: #569cd6; /* Brighter blue */
+    font-weight: bold;
+}
+
+.code-block .sa, .code-block .sb, .code-block .sc {  /* String parts */
+    color: #7ec699; /* Soft green */
+}
+
+/* Pre tag inside the code block */
+.code-block pre {
+    margin: 0;
+    color: var(--text-color);
+}
+
+/* Highlighted line background */
+.code-block .hll {
+    background-color: #3a3a3a;
+    border-left: 3px solid #8fbacf;
+    margin-left: -3px;
+}
+
+/* Make copy-paste easier by improving selection visibility */
+.code-block ::selection {
+    background-color: rgba(139, 139, 139, 0.3);
+}
+
+.code-block::after {
+    margin: 0.75em auto 0;
+}
+
+/* Copy button styling */
+.copy-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(70, 70, 70, 0.6);
+    color: #ccc;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 8px;
+    font-size: 0.8em;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.code-block:hover .copy-button {
+    opacity: 1;
+}
+
+.copy-button:hover {
+    background-color: rgba(90, 90, 90, 0.8);
+    color: #fff;
+}
+
+.copy-button:active {
+    transform: scale(0.95);
+}

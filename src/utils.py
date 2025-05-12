@@ -69,7 +69,15 @@ def render_markdown(text):
     text = re.sub(r'!\[(.*?)\]\((.*?)\)', process_images, text)
 
     # Process with markdown
-    html = markdown.markdown(text, extensions=['fenced_code', 'codehilite', 'tables', 'md_in_html'])
+    html = markdown.markdown(
+        text,
+        extensions=['fenced_code', 'codehilite', 'tables', 'md_in_html'],
+        extension_configs={
+            'codehilite': {
+                'css_class': 'code-block',  # custom CSS class (in /static/code.css)
+            }
+        }
+    )
 
     # Post-process HTML to add width attributes to images
     def add_image_width(match):
