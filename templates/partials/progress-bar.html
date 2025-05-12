@@ -1,0 +1,57 @@
+<style>
+    #progress-container {
+        position: fixed;
+        top: 50%;
+        left: 5%;
+        transform: translateY(-50%);
+        width: 2px;
+        height: 50%;
+        background: rgba(114, 114, 114, 0.1);
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.5s ease;
+    }
+
+    #progress-bar {
+        width: 100%;
+        background: #fff;
+        height: 0;
+        transition: height 0.1s ease;
+    }
+
+    /* Only show progress bar on larger screens */
+    @media (min-width: 768px) {
+        #progress-container.visible {
+            opacity: 1;
+        }
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Create the progress bar elements
+        document.body.innerHTML += `
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+        `;
+
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const threshold = 300; // Set threshold in pixels
+
+        document.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (scrollTop / docHeight) * 100;
+
+            // Show progress bar after crossing the threshold
+            if (scrollTop > threshold) {
+                progressContainer.classList.add('visible');
+            } else {
+                progressContainer.classList.remove('visible');
+            }
+
+            // Update progress bar height
+            progressBar.style.height = scrolled + '%';
+        });
+    });
+</script>
