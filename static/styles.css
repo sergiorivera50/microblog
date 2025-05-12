@@ -91,14 +91,6 @@ figure > figcaption {
     text-align: center;
 }
 
-code {
-    font-family: monospace;
-    padding: 2px;
-    background-color: var(--code-background-color);
-    color: var(--code-color);
-    border-radius: 3px;
-}
-
 blockquote {
     border-left: 1px solid #999;
     color: var(--code-color);
@@ -123,17 +115,16 @@ footer {
     width: auto !important;
 }
 
-.highlight, .code {
-    padding: 1px 15px;
-    background-color: var(--code-background-color);
-    color: var(--code-color);
-    border-radius: 3px;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    overflow-x: auto;
+/* blog post content */
+.post-header > h1 {
+    line-height: 1.25;
+    font-size: 2.0em;
 }
 
-/* blog post content */
+.post-content > p {
+    text-align: justify;
+}
+
 .post-content img {
     display: block;
     margin: auto;
