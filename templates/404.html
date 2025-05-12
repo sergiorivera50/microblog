@@ -3,11 +3,27 @@
 {% block title %}Page Not Found - {{ site.title }}{% endblock %}
 {% block description %}The page you were looking for could not be found.{% endblock %}
 
+{% block head %}
+{% include 'partials/math.html' %}
+{% endblock %}
+
 {% block content %}
 <div class="error-page">
     <h1>404</h1>
     <h2>Page Not Found</h2>
-    <p>The page you were looking for could not be found.</p>
-    <p><a href="/">Go back to the homepage</a></p>
+    <p>
+        Unfortunately, the page you were looking for could not be found.
+        However, here's something I can offer you to compensate for such an
+        incredible disappointment:
+    </p>
+    <p>
+        $$
+        f(x_{1}, \dots, x_{n}) = \sum\limits_{q=0}^{2n}\Phi_{q} (\sum\limits_{p=1}^{n} \phi_{q,p}(x_{p}))
+        $$
+    </p>
+    <p>
+        If you know what this is, you might want to stick around and read my
+        <a href="/blog">blog</a> 😉
+    </p>
 </div>
 {% endblock %}
