@@ -161,6 +161,12 @@ ul.blog-posts li a:visited {
     margin: 0 auto;
 }
 
+.profile-content::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 .profile-image {
     float: left;
     width: 200px;
@@ -168,8 +174,8 @@ ul.blog-posts li a:visited {
     border-radius: 8px;
 }
 
-.profile-content::after {
-    content: "";
-    display: table;
-    clear: both;
+@media (max-width: 575.98px) {
+    .profile-image {
+        width: 100px;
+    }
 }
