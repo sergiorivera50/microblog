@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lugrasimo&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
     --width: 720px;
     --font-main: "PT Serif", serif;
+    --font-special: "Lugrasimo", cursive;
     --font-scale: 1em;
     --background-color: #262626;
     --heading-color: #eee;
@@ -58,9 +59,9 @@ button {
 }
 
 time {
-    font-family: "Apple Chancery", monospace;
+    font-family: var(--font-special);
     font-style: normal;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 main {
