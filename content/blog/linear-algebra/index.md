@@ -10,6 +10,11 @@ In this post, we will depart from the fundamentals of vectors and arrive at matr
 
 We first begin by motivating the application of _linear algebra_ to the field of data science, followed-up by some basic definitions on the properties and operations of vectors. Then, matrices are introduced and their purpose is explained with respect to the transformation of space.
 
+<figure>
+	<img src="assets/Pasted image 20250517234625.png" alt="Alt text for the image" width=500> 
+	<figcaption></figcaption>
+</figure>
+
 ---
 
 A fundamental application of linear algebra is solving sets of simultaneous equations:
