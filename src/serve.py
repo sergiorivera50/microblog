@@ -10,6 +10,7 @@ from livereload import Server
 from pathlib import Path
 
 from src.build import build_site, CONTENT_DIR, TEMPLATES_DIR, PUBLIC_DIR, CONFIG_FILE
+from src.utils import load_config
 
 
 class ChangeHandler(FileSystemEventHandler):
@@ -79,8 +80,10 @@ def get_server_config(config):
 
 def start_livereload_server():
     """Start the livereload server"""
+    config = load_config(CONFIG_FILE)
+
     # First build the site
-    config = build_site()
+    build_site()
 
     # Create livereload server
     server = Server()

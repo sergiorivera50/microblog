@@ -340,7 +340,5 @@ def build_site():
     with open(Path(PUBLIC_DIR) / 'data.json', 'w') as f:
         json.dump(context, f, sort_keys=True, indent=4, default=str)
 
-    return config
-
 if __name__ == "__main__":
     build_site()
