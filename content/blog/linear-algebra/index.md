@@ -1,6 +1,6 @@
 ---
 title: A Gentle Introduction to Linear Algebra for Data Science
-date: 2024-07-29
+Date: 2024-07-29
 tags:
   - math
 math: true
@@ -31,10 +31,11 @@ $$
 We can employ vectors and matrices to solve them through the use of a special operation called the _inverse_, which we will later introduce.
 
 Another typical use case is that of fitting a curve to a dataset that best describes it:
-<figure>
-	<img src="assets/fitting_curve.png" alt="Alt text for the image" width=400> 
-	<figcaption>Figure 1. The data $X$ describes an underlying function $f(x)$.</figcaption>
-</figure>
+
+<img src="assets/fitting_curve.png" alt="Image" width="400">
+
+> Figure 1. The data $X$ describes an underlying function $f(x)$
+
 Although we will not yet show how to achieve this, you must at least be aware that plenty of fields in the real world use methods like _polynomial regression_ to approximate these curves in order to help them predict new observations. Some of the more prominent being healthcare, economics, and environmental science.
 
 All in all, we see these kinds of problems all the time, from simpler linear regression models to more complex supply chain management. Linear algebra truly is the backbone of data science and knowing its foundations really well will definitely set you apart and allow you to better understand the mathematics behind most of your tools.
@@ -42,10 +43,10 @@ All in all, we see these kinds of problems all the time, from simpler linear reg
 # Vectors
 
 A vector $\mathbf{v} \in \mathbb{R}^{n}$ is an ordered tuple of $n$ scalars. We can think of vectors as points in space, directions, or quantities that have both magnitude and direction. For example, a vector in two-dimensional space is written as $\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \end{bmatrix}$, and in three-dimensional space as $\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \\ v_3 \end{bmatrix}$.
-<figure>
-	<img src="assets/vector.png" alt="Alt text for the image" width=140> 
-	<figcaption>Figure 2. A two-dimensional vector $\mathbf{v}$.</figcaption>
-</figure>
+
+
+<img src="assets/vector.png" alt="Image" width="140">
+> Figure 2. A two-dimensional vector $\mathbf{v}$
 
 Note here that we are using a different notation for vectors than what you might find when you open a traditional linear algebra textbook. In machine learning, it is convention to define vectors as $\mathbf{u}$ instead of $\vec{u}$, however, both notations are valid and you should use whichever you are more comfortable working with. Just be aware that for the duration of this post I will be adhering to the former convention.
 
@@ -109,10 +110,10 @@ $$
 
 By looking at the cosine rule, we can derive a property of the dot product that relates the angle between two vectors to the operation's result.
 
-<figure>
-	<img src="assets/cosine_rule.png" alt="Alt text for the image" width=200> 
-	<figcaption>Figure 3. Three vectors $\mathbf{r}$, $\mathbf{s}$, and $\mathbf{r} - \mathbf{s}$.</figcaption>
-</figure>
+
+<img src="assets/cosine_rule.png" alt="Image" width="200">
+
+> Figure 3. Three vectors $\mathbf{r}$, $\mathbf{s}$, and $\mathbf{r} - \mathbf{s}$
 
 Recall the cosine rule:
 
@@ -157,10 +158,9 @@ Therefore, the result of the dot product of two vectors is in direct relation to
 
 We understand the term *scalar projection* as the length of the “shadow” that is cast from one vector to another, which is closely linked with the angle that they form.
 
-<figure>
-	<img src="assets/scalar_projection.png" alt="Alt text for the image" width=200> 
-	<figcaption>Figure 4. Visual depiction of the scalar projection of $\mathbf{s}$ over $\mathbf{r}$.</figcaption>
-</figure>
+<img src="assets/scalar_projection.png" alt="Image" width="200">
+
+> Figure 4. Visual depiction of the scalar projection of $\mathbf{s}$ over $\mathbf{r}$
 
 Stemming from trigonometry, we recall:
 

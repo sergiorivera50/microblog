@@ -1,4 +1,4 @@
 ---
 title: Blog
-description: ""
+description: My personal blog posts and thoughts
 ---

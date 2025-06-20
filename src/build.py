@@ -4,14 +4,17 @@ build.py - Minimal static site generator that reads Markdown files and converts 
 """
 
 import os
-import tomli
+import json
 import shutil
 import frontmatter
 from datetime import datetime
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
-from src.utils import render_markdown, slugify
+from src.utils import (
+    render_markdown, slugify, ensure_dir, copy_files, generate_url, generate_sitemap, load_config, process_assets,
+    create_blog_index
+)
 
 # Configuration
 CONTENT_DIR = "content"
@@ -23,53 +26,16 @@ POST_LAYOUT = "post.html"
 LIST_LAYOUT = "list.html"
 HOME_LAYOUT = "home.html"
 
-def load_config():
-    """Load configuration from a TOML file"""
-    try:
-        with open(CONFIG_FILE, "rb") as f:
-            return tomli.load(f)
-    except FileNotFoundError:
-        raise Exception(f"Config file '{CONFIG_FILE}' not found")
-
-def ensure_dir(directory):
-    """Ensure directory exists"""
-    Path(directory).mkdir(parents=True, exist_ok=True)
-
 def copy_static_files():
     """Copy static files to public directory"""
-    static_dir = Path("static")
-    if static_dir.exists():
-        for item in static_dir.glob("**/*"):
-            if item.is_file():
-                dest = Path(PUBLIC_DIR) / item.relative_to(static_dir)
-                ensure_dir(dest.parent)
-                shutil.copy2(item, dest)
+    return copy_files("static", PUBLIC_DIR)
 
 def copy_content_assets():
     """Copy non-markdown files from content folders to public output"""
-    content_path = Path(CONTENT_DIR)
-
-    # Find all non-markdown files in content directory
-    for asset in content_path.glob("**/*"):
-        # Skip directories and markdown files
-        if asset.is_dir() or asset.suffix in ['.md', '.markdown']:
-            continue
-
-        # Skip files in hidden folders (paths containing a folder starting with '.')
-        if any(part.startswith('.') for part in asset.parts):
-            continue
-
-        # Determine destination path
-        rel_path = asset.relative_to(content_path)
-        dest_path = Path(PUBLIC_DIR) / rel_path
-
-        # Create parent directories if they don't exist
-        ensure_dir(dest_path.parent)
-
-        # Copy the file
-        shutil.copy2(asset, dest_path)
-
-    print(f"Content assets copied.")
+    return copy_files(
+        CONTENT_DIR, PUBLIC_DIR,
+        exclude_patterns=["**/*.md", "**/*.markdown", "**/.*/**"]
+    )
 
 def get_nav_pages(pages):
     """Get pages to show in navigation"""
@@ -136,41 +102,18 @@ def process_content():
         level = len(md_file.relative_to(content_path).parts) - 1
 
         # Parse frontmatter and content
-        page = frontmatter.load(md_file)
+        page = frontmatter.load(str(md_file))
 
         # Extract or generate metadata
         title = page.get('title', md_file.stem.replace('-', ' ').title())
-        date = page.get('date', datetime.fromtimestamp(md_file.stat().st_mtime).date())
+        date = page.get('Date', datetime.fromtimestamp(md_file.stat().st_mtime).date())
 
         # Generate slug if not provided
         slug = page.get('slug', slugify(title) if not is_index else '')
 
         # Determine URL path and output path
-        rel_path = md_file.relative_to(content_path).parent
-        if is_index:
-            # Section index files (_index.md)
-            if rel_path == Path(''):
-                # Root _index.md
-                url = "/"
-                output_path = Path(PUBLIC_DIR) / "index.html"
-            else:
-                # Section _index.md
-                url = f"/{rel_path}/"
-                output_path = Path(PUBLIC_DIR) / rel_path / "index.html"
-        elif is_content_index:
-            # Content index.md files (treat as the content for their directory)
-            url = f"/{rel_path}/"
-            output_path = Path(PUBLIC_DIR) / rel_path / "index.html"
-        else:
-            # Regular pages and posts
-            if rel_path == Path(''):
-                # Top-level page
-                url = f"/{slug}/"
-                output_path = Path(PUBLIC_DIR) / slug / "index.html"
-            else:
-                # Nested page
-                url = f"/{rel_path}/{slug}/"
-                output_path = Path(PUBLIC_DIR) / rel_path / slug / "index.html"
+        rel_path = md_file.relative_to(Path(CONTENT_DIR)).parent
+        url, output_path = generate_url(rel_path, PUBLIC_DIR, is_index, is_content_index, slug)
 
         # Determine layout template
         layout = page.get('layout', None)
@@ -239,10 +182,71 @@ def process_content():
         'tags': tags
     }
 
+def sync_content(config):
+    """Sync external content to local content structure if external paths are specified"""
+    sync_config = config.get("sync", {})
+    external_sync_path = sync_config.get("path")
+
+    if not external_sync_path:
+        return  # No external path specified, skip sync
+
+    external_path = Path(external_sync_path).expanduser()
+
+    if not external_path.exists():
+        print(f"Warning: External path '{external_path}' does not exist. Skipping sync.")
+        return
+
+    # Get the source type (default to 'markdown' for basic functionality)
+    source_type = sync_config.get("type", "markdown")
+
+    print(f"Syncing content from: {external_path} (type: {source_type})")
+
+    # Clean existing blog content directory
+    blog_content_dir = Path(CONTENT_DIR) / "blog"
+    if blog_content_dir.exists():
+        shutil.rmtree(blog_content_dir)
+    ensure_dir(blog_content_dir)
+
+    # Create _index.md file for the blog section
+    create_blog_index(blog_content_dir)
+
+    # Process all markdown files in external blog directory
+    for md_file in external_path.glob("**/*.md"):
+        # Skip files in .obsidian directory and other hidden folders
+        if any(part.startswith('.') for part in md_file.parts):
+            continue
+
+        # Skip files starting with underscore (drafts)
+        if md_file.stem.startswith('_'):
+            continue
+
+        # Generate slug for directory name
+        post_slug = slugify(md_file.stem)
+        post_dir = blog_content_dir / post_slug
+        ensure_dir(post_dir)
+
+        # Read and process markdown content
+        with open(md_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # Find and copy assets, update content references
+        content, assets_copied = process_assets(content, md_file, post_dir, source_type)
+
+        # Write the processed markdown as index.md
+        with open(post_dir / "index.md", 'w', encoding='utf-8') as f:
+            f.write(content)
+
+        print(f"  ✓ Synced: {md_file.name} -> {post_slug}/ ({assets_copied} assets)")
+
+    print("Content sync completed.")
+
 def build_site():
     """Build the entire site"""
     # Load configuration
-    config = load_config()
+    config = load_config(CONFIG_FILE)
+
+    # Sync external content first (only if configured)
+    sync_content(config)
 
     # Setup Jinja environment
     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
@@ -329,7 +333,14 @@ def build_site():
         with open(f"{PUBLIC_DIR}/404.html", 'w') as f:
             f.write(html)
 
+    generate_sitemap(content['pages'], config, PUBLIC_DIR)
+
     print(f"Site built successfully! {len(content['pages'])} pages processed.")
+
+    with open(Path(PUBLIC_DIR) / 'data.json', 'w') as f:
+        json.dump(context, f, sort_keys=True, indent=4, default=str)
+
+    return config
 
 if __name__ == "__main__":
     build_site()
