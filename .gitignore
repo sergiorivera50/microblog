@@ -3,6 +3,7 @@
 .venv
 **/.obsidian
 **/.DS_Store
+**/__pycache__
 
 # Build artifacts (should be created at CI/CD)
 public
