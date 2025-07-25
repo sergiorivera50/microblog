@@ -3,7 +3,7 @@ name = "microblog"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Sergio Rivera",email = "sriveralopez50@gmail.com"}
+    {name = "Sergio Rivera", email = "sr2070@cantab.ac.uk"}
 ]
 readme = "README.md"
 requires-python = ">=3.10"
